@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/MethodLength
+
+# Stylize text
 module TextFormat
   def formatting(description, string)
     {
       'bold' => "\e[1m#{string}\e[22m",
       'underline' => "\e[4;1m#{string}\e[0m",
       'italic' => "\e[3m#{string}\e[23m",
-      
+
       'black' => "\e[30m#{string}\e[0m",
       'red' => "\e[31m#{string}\e[0m",
       'green' => "\e[32m#{string}\e[0m",
@@ -24,7 +27,9 @@ module TextFormat
       'bg_magenta' => "\e[45m#{string}\e[0m",
       'bg_cyan' => "\e[46m#{string}\e[0m",
       # use instead of gray_bg so text is visible
-      'reverse_color' => "\e[7m#{string}\e[0m" 
+      'reverse_color' => "\e[7m#{string}\e[0m"
     }[description]
   end
 end
+
+# rubocop:enable Metrics/MethodLength

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require './computer.rb'
-require './display.rb'
-require './instructions.rb'
-require './logic.rb'
-require './messages.rb'
+require './computer'
+require './display'
+require './instructions'
+require './logic'
+require './messages'
 
 # Start a game of Mastermind
 class Game
@@ -14,8 +14,8 @@ class Game
   include Messages
   attr_reader :player, :rounds
 
-  MODES = ["M","B"]
-  ROUNDS = ["6","8","10","12"]
+  MODES = %w[M B].freeze
+  ROUNDS = %w[6 8 10 12].freeze
 
   def initialize
     @player = MODES[0]
@@ -26,7 +26,7 @@ class Game
   def start
     instructions
     intro
-    @player == "M" ? maker : breaker
+    @player == 'M' ? maker : breaker
   end
 
   protected
@@ -42,7 +42,7 @@ class Game
   def breaker
     puts setup[4]
     secret_code = random_pattern
-    winner = player_breaker(@board,@rounds,secret_code)
+    winner = player_breaker(@board, @rounds, secret_code)
     winner ? codebreaker_win : codemaker_win(convert_code(secret_code))
   end
 

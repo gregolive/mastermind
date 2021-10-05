@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'computer.rb'
-require_relative 'display.rb'
-require_relative 'game.rb'
-require_relative 'instructions.rb'
-require_relative 'logic.rb'
-require_relative 'messages.rb'
+require_relative 'computer'
+require_relative 'display'
+require_relative 'game'
+require_relative 'instructions'
+require_relative 'logic'
+require_relative 'messages'
 
 Game.new.start
