@@ -25,8 +25,6 @@ module InputLogic
     input
   end
 
-  protected
-
   def integer?(string)
     string.to_i.to_s == string
   end
@@ -36,7 +34,7 @@ module InputLogic
   end
 end
 
-# Takes the numberic guess, processes and prints matching board to screen
+# All methods for when player is codebreaker
 module GameLogic
   include InputLogic
   include Messages
@@ -66,17 +64,22 @@ module GameLogic
     ]
   end
 
-  # player is codebreaker
+  def random_pattern
+    pattern = []
+    4.times { pattern.push(rand(1..8)) }
+    pattern.collect(&:to_s)
+  end
+
   def player_breaker(board, rounds, answer)
     winner = false
     while !winner && rounds.positive?
       guess = player_guess
       feedback = check_guess(guess, answer)
-      puts board += make_board(guess, feedback)
+      print board += make_board(guess, feedback)
       winner = feedback == win
       rounds -= 1
     end
-    puts board_piece[1]
+    print board_piece[1]
     winner
   end
 
@@ -91,8 +94,9 @@ module GameLogic
   def check_guess(guess, answer)
     key_pegs = []
     temp_answer = answer.dup # that can be modified
-    exact = match(key_pegs, guess, temp_answer)
-    key_pegs = partial_match(exact[0], guess, exact[1])
+    temp_guess = guess.dup
+    exact = match(key_pegs, temp_guess, temp_answer)
+    key_pegs = partial_match(exact[0], exact[1], exact[2])
     add_blanks(key_pegs)
   end
 
@@ -103,17 +107,23 @@ module GameLogic
       if guess == answer_array[element]
         keys.push(formatting('red', '●').to_s)
         answer_array[element] = nil
+        guess_array[element] = nil
       end
       element += 1
     end
-    [keys, answer_array]
+    [keys, guess_array, answer_array]
   end
 
   # add white key peg on partial match
   def partial_match(keys, guess_array, answer_array)
     element = 0
     guess_array.each do |guess|
-      keys.push('●') if answer_array.include?(guess)
+      next if guess.nil?
+
+      if answer_array.include?(guess)
+        keys.push('●')
+        answer_array[answer_array.index(guess)] = nil
+      end
       element += 1
     end
     keys
@@ -135,5 +145,34 @@ module GameLogic
   # convert numbered code for colored display
   def convert_code(number_code)
     number_code.map! { |number| colors[number] }
+  end
+end
+
+# All methods for when computer is codebreaker
+module ComputerLogic
+  include GameLogic
+
+  def display_code(code)
+    colored_code = convert_code(code)
+    show_code(colored_code)
+  end
+
+  def computer_breaker(rounds, player_code)
+    winner = false
+    print board_piece[0]
+    while !winner && rounds.positive?
+      winner = computer_guess(player_code) == win
+      rounds -= 1
+    end
+    print board_piece[1]
+    winner
+  end
+
+  def computer_guess(player_code)
+    guess = random_pattern
+    feedback = check_guess(guess, player_code)
+    print make_board(guess, feedback)
+    sleep(0.75)
+    feedback
   end
 end

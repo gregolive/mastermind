@@ -67,7 +67,15 @@ module GameInstructions
 
       This version of Mastermind is played in the command line.
 
-      ...
+      First you will choose whether you want to play as the #{formatting('blue', 'CODEMAKER')} or the #{formatting('red', 'CODEBREAKER')}, as well as the number of guesses the codebreaker is allowed.
+
+      To create a pattern or make a guess you will enter a 4-digit numerical code with numbers corresponding to...
+
+      #{formatting('bg_black', '  1  ')}  #{formatting('bg_red', '  2  ')}  #{formatting('bg_green', '  3  ')}  #{formatting('bg_yellow', '  4  ')}  #{formatting('bg_blue', '  5  ')}  #{formatting('bg_magenta', '  6  ')}  #{formatting('bg_cyan', '  7  ')}  #{formatting('reverse_color', '  8  ')}
+
+      Feedback is automatically generated when playing as the codemaker.
+
+      #{formatting('italic', 'GOOD LUCK!')}
       #{'  '}
     HEREDOC
   end

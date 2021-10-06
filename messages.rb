@@ -16,7 +16,7 @@ module Messages
 
       "\nAs the #{formatting('red', 'CODEBREAKER')} you will try to break the code.",
 
-      "\nMake a guess by entering a 4-digit code using numbers 1-8."
+      "\n\nMake a guess by entering a 4-digit code using numbers 1-8."
     ]
   end
 
@@ -33,7 +33,7 @@ module Messages
   def board_piece
     [
       "\n┏━━━━━━━━━━━━━━━━━━━━━━━━┓\n┃       MASTERMIND       ┃\n┣════════════════════════┫",
-      '┗━━━━━━━━━━━━━━━━━━━━━━━━┛'
+      "\n┗━━━━━━━━━━━━━━━━━━━━━━━━┛"
     ]
   end
 
@@ -41,13 +41,22 @@ module Messages
     "\n┃ #{guess[0]}  #{guess[1]}  #{guess[2]}  #{guess[3]}     #{feedback[0]} #{feedback[1]} #{feedback[2]} #{feedback[3]} ┃\n┣━━━━━━━━━━━━━━━━━━━━━━━━┫"
   end
 
-  def codemaker_win(code)
-    print "\n#{formatting('blue', 'CODEMAKER')} wins! The secret code was "
+  def show_code(code)
+    print "\nYour secret code is "
     puts "#{code[0]}  #{code[1]}  #{code[2]}  #{code[3]}"
   end
 
+  def codemaker_win(code)
+    print "\n\n#{formatting('blue', 'CODEMAKER')} wins! The secret code was "
+    puts "#{code[0]}  #{code[1]}  #{code[2]}  #{code[3]}\n\n"
+  end
+
   def codebreaker_win
-    puts "\n#{formatting('red', 'CODEBREAKER')} wins! They cracked the code!"
+    print "\n\n#{formatting('red', 'CODEBREAKER')} wins! They broke the code!\n\n"
+  end
+
+  def codemaker_win_basic
+    print "\n\n#{formatting('blue', 'CODEMAKER')} wins! The code was unbreakable!\n\n"
   end
 end
 

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require './computer'
 require './display'
 require './instructions'
 require './logic'
@@ -9,8 +8,8 @@ require './messages'
 # Start a game of Mastermind
 class Game
   include GameLogic
+  include ComputerLogic
   include GameInstructions
-  include ComputerPlayer
   include Messages
   attr_reader :player, :rounds
 
@@ -40,7 +39,7 @@ class Game
 
   # player is codebreaker
   def breaker
-    puts setup[4]
+    print setup[4]
     secret_code = random_pattern
     winner = player_breaker(@board, @rounds, secret_code)
     winner ? codebreaker_win : codemaker_win(convert_code(secret_code))
@@ -49,5 +48,10 @@ class Game
   # player is codemaker
   def maker
     puts setup[3]
+    puts setup[2]
+    player_code = code_input(ask_again[2]).split(//)
+    display_code(player_code.dup)
+    winner = computer_breaker(@rounds, player_code)
+    winner ? codebreaker_win : codemaker_win_basic
   end
 end
