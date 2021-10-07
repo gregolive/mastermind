@@ -160,19 +160,47 @@ module ComputerLogic
   def computer_breaker(rounds, player_code)
     winner = false
     print board_piece[0]
-    while !winner && rounds.positive?
-      winner = computer_guess(player_code) == win
-      rounds -= 1
+    results = {}
+    current_round = 1
+    while !winner && current_round <= rounds
+      winner = computer_guess(player_code, current_round, results) == win
+      current_round += 1
     end
     print board_piece[1]
     winner
   end
 
-  def computer_guess(player_code)
-    guess = random_pattern
+  def computer_guess(player_code, round, results)
+    guess = computer_strat(round, results)
     feedback = check_guess(guess, player_code)
+    check_for_match(guess, player_code, results)
     print make_board(guess, feedback)
     sleep(0.75)
     feedback
+  end
+
+  def computer_strat(round, results)
+    if results.size < 4
+      if round < 8
+        computer_guess_style(round, round, (round + 1), (round + 1))
+      else
+        computer_guess_style(round, round, 1, 1)
+      end
+    else
+      computer_guess_style(results[1], results[2], results[3], results[4])
+    end
+  end
+
+  def computer_guess_style(pos1, pos2, pos3, pos4)
+    [pos1.to_s, pos2.to_s, pos3.to_s, pos4.to_s]
+  end
+
+  def check_for_match(guess, answer, results)
+    element = 0
+    while element < 4
+      results[element + 1] = guess[element] if answer[element] == guess[element]
+      element += 1
+    end
+    results
   end
 end
