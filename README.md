@@ -9,7 +9,7 @@ Become the **CODEBREAKER** to crack the opponent's code in 12 turns or less.
 
 ## Functionality
 
-A command version of board game [Mastermind](https://en.wikipedia.org/wiki/Mastermind_(board_game)) made with Ruby. Players can choose to make a code usings number 1-8 that the computer player attempts to crack, or break a randomly generated code in 6, 8 10, or 12 turns depending on the selected difficulty level.
+A command version of board game [Mastermind](https://en.wikipedia.org/wiki/Mastermind_(board_game)) made with Ruby. Players can choose to make a code usings number 1-8 that the computer player attempts to crack, or break a randomly generated code in 6, 8, 10, or 12 turns depending on the selected difficulty level.
 
 ## Reflection
 
